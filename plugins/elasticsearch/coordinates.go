@@ -99,9 +99,9 @@ func interpolateFlag(e *ElasticSearchCoordinates, m *message.Message, name strin
 				} else {
 					var t time.Time
 					if e.ESIndexFromTimestamp && m.Timestamp != nil {
-						t = time.Unix(0, *m.Timestamp).UTC()
+						t = time.Unix(0, *m.Timestamp).Local()
 					} else {
-						t = time.Now().UTC()
+						t = time.Now().Local()
 					}
 					iSlice[i] = strings.Replace(iSlice[i], element[:elEnd+1], gostrftime.Strftime(elVal, t), -1)
 				}
