@@ -128,7 +128,7 @@ func ESEncodersSpec(c gs.Context) {
 			interpolatedIndex, err := interpolateFlag(&ElasticSearchCoordinates{},
 				pack.Message, "heka-%{Pid}-%{\"foo}-%{%Y.%m.%d}")
 			c.Expect(err, gs.IsNil)
-			t := time.Now().UTC()
+			t := time.Now().Local()
 			c.Expect(interpolatedIndex, gs.Equals, "heka-14098-bar\n-"+t.Format("2006.01.02"))
 
 			interpolatedType, err := interpolateFlag(&ElasticSearchCoordinates{},
@@ -179,7 +179,7 @@ func ESEncodersSpec(c gs.Context) {
 			err = json.Unmarshal([]byte(lines[0]), &decoded)
 			c.Assume(err, gs.IsNil)
 			sub := decoded["index"].(map[string]interface{})
-			t := time.Now().UTC()
+			t := time.Now().Local()
 			c.Expect(sub["_index"], gs.Equals, "logstash-"+t.Format("2006.01.02"))
 			c.Expect(sub["_type"], gs.Equals, "message")
 
@@ -320,7 +320,7 @@ func ESEncodersSpec(c gs.Context) {
 			err = json.Unmarshal([]byte(lines[0]), &decoded)
 			c.Assume(err, gs.IsNil)
 			sub := decoded["index"].(map[string]interface{})
-			t := time.Now().UTC()
+			t := time.Now().Local()
 			c.Expect(sub["_index"], gs.Equals, "heka-"+t.Format("2006.01.02"))
 			c.Expect(sub["_type"], gs.Equals, "message")
 
